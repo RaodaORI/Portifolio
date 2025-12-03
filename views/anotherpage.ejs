@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="all">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/styles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1><a href="/">Home</a> / <%= taskId %></h1>
+
+      Welcome to Another Page!
+
+      <h1>Title: <%= taskTitle %></h1>
+      <form action="anotherpage" method="post">
+        <input type="hidden" name="taskId" value="<%= taskId %>" />
+        <input type="hidden" name="descId" value="<%= taskId %>" />
+
+        <textarea name="descText"><%= taskDetails.descr %></textarea>
+
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </body>
+</html>
