@@ -45,7 +45,7 @@
             </form>
 
             <!-- Task display and link to another page -->
-              <span>
+              <span class="taskTodo">
               <input type="submit" value="<%= task.tasks %>" class="taskspan" style="all:unset;"/>
               </span>
               
@@ -55,7 +55,7 @@
 
              
             <form action="/edit" method="post" class="edit-form">
-              <input type="text" autofocus="true" style="display:none;" name="editlast" class="edit-input" value="<%= task.tasks.trim() %>"/> <!-- Edited input field -->
+              <input type="text" autofocus style="display:none;" name="editlast" class="edit-input" value="<%= task.tasks.trim() %>"/> <!-- Edited input field -->
               <input type="hidden" name="editIds" value="<%= task.id %>"> <!-- Hidden field for task ID -->
 
 
@@ -195,6 +195,90 @@ editButtons.forEach((e, index) => {
     });
   });
 });
+
+let textTodo = document.getElementsByClassName("taskTodo");
+let todos = Array.from(textTodo);
+todos.forEach((e, index) => {
+  e.addEventListener("click", () => {
+
+    
+    e.style.cursor = "pointer";
+    let window = document.createElement("div");
+    document.body.appendChild(window);
+
+    window.style.position = "fixed";
+    window.style.top = "50%";
+    window.style.left = "50%";
+    window.style.transform = "translate(-50%, -50%)";
+    window.style.backgroundColor = "white";
+    window.style.padding = "20px";
+    window.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+    window.style.zIndex = "1000";
+    window.style.width = "75%";
+    window.style.height = "75%";
+    window.style.overflowY = "auto";
+
+    let title = document.createElement("h2");
+    title.innerText = "Task Details";
+    window.appendChild(title);
+
+    let theExit = document.createElement("button");
+    window.appendChild(theExit);
+    theExit.innerText = "❌";
+    theExit.addEventListener("click", () => {
+      document.body.removeChild(window);
+    });
+
+    theExit.style.position = "absolute";
+    theExit.style.top = "10px";
+    theExit.style.right = "10px";
+    theExit.style.background = "none";
+    theExit.style.border = "none";
+    theExit.style.fontSize = "1.5rem";
+
+    let content = document.createElement("p");
+    let taskContent = e.querySelector(".taskspan").value;
+    content.innerText = taskContent;
+    window.appendChild(content);
+
+    let AddSubtask = document.createElement("button");
+    AddSubtask.innerText = "Add Subtask";
+    window.appendChild(AddSubtask);
+
+    AddSubtask.addEventListener("click", () => {
+      let subtaskInput = document.createElement("input");
+      subtaskInput.type = "text";
+      subtaskInput.placeholder = "Enter subtask";
+      subtaskInput.name = "subtask";
+      window.appendChild(subtaskInput);
+
+      let saveSubtaskBtn = document.createElement("button");
+      saveSubtaskBtn.innerText = "Save Subtask";
+      window.appendChild(saveSubtaskBtn);
+
+      saveSubtaskBtn.addEventListener("click", () => {
+        let subtaskText = subtaskInput.value.trim();
+        if (subtaskText !== "") {
+          let subtaskItem = document.createElement("p");
+          subtaskItem.innerText = "• " + subtaskText;
+          window.appendChild(subtaskItem);
+          subtaskInput.value = "";
+        } else {
+          alert("Subtask cannot be empty");
+        }
+
+        // subtaskItem.addEventListener("click", e => {
+        //   e.style.textDecoration = "line-through";
+        //   e.style.cursor = "pointer";
+        })
+      });
+    });
+
+
+
+  })})
+
+
 
     </script>
   </body>

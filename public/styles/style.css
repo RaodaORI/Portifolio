@@ -135,13 +135,29 @@ span {
   margin-bottom: 1rem;
   background-color: #f9f9f9;
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #ececec;
   border-radius: 10px;
 
   display: flex;
   justify-content: space-around;
   flex-grow: 5;
+}
+
+input.edit-input {
+  all: unset;
+  padding: 5px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form.edit-form {
+  display: flex;
+  align-items: flex-start;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 span input[type="submit"] {
