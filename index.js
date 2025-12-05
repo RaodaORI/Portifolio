@@ -144,4 +144,26 @@ app.post("/edit", async (req, res) => {
   }
 });
 
+//subtask into tasks_detail
+app.post("/sub", async (req, res) => {
+  const subtask = req.body.subtask || "No Subtask";
+  const taskId = req.body.taskId; // You need to pass taskId from the form
+  const description = req.body.description;
+
+  try {
+    //submit subtask description and tags
+    await db.query(
+      "INSERT INTO tasks_detail (task_id, descr, tags, task_sub) VALUES ($1, $2, $3, $4)",
+      [taskId, description || "", "", subtask]
+    );
+
+    res.redirect("/"); // ✅ after insert, reload home
+  } catch (error) {
+    console.error("Error executing query", error.stack);
+    res.send("Error adding subtask");
+  }
+});
+
+//////////////////////////////////////////////////////////////
+
 app.listen(3000); //

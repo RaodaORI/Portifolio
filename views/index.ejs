@@ -1,285 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/style.css" />
-    <title>Document</title>
-  </head>
-  <body>
-<div class= "sidenav">
-  <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles/style.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="sidenav">
+    <a class="active" href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
 
 
-</div>
+  </div>
 
-    <div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
-    <div class="container">
-        <h1 class="cairo" style="text-align: center;">Welcome Rouzaa</h1>
-        <div class="container-input"> 
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <div class="container">
+    <h1 class="cairo" style="text-align: center;">Welcome Rouzaa</h1>
+    <div class="container-input">
       <form action="/action" method="post" style="text-align: center;" class="container-submit">
         <input type="text" name="text" id="text" />
         <button type="submit" class="button-67">Submit</button>
       </form>
 
-        </div>
-
-        <br />
-      
-        <!-- Active Tasks -->
-        <div class="card">
-          
-          <% if (data && data.length> 0) { %> <% data.forEach(task => { %> <!-- Loop through tasks -->
-
-            <!-- Write task and post-->
-          <div class="task-item" name="newtask">
-            <form action="/finished" method="post" class="finished-btn">
-
-            <!--To another page button-->
-              <button name="idFinished" value="<%= task.id %>">✔</button>
-            </form>
-
-            <!-- Task display and link to another page -->
-              <span class="taskTodo">
-              <input type="submit" value="<%= task.tasks %>" class="taskspan" style="all:unset;"/>
-              </span>
-              
-
-            <!-- Edit form -->
-             <div class="cont">
-
-             
-            <form action="/edit" method="post" class="edit-form">
-              <input type="text" autofocus style="display:none;" name="editlast" class="edit-input" value="<%= task.tasks.trim() %>"/> <!-- Edited input field -->
-              <input type="hidden" name="editIds" value="<%= task.id %>"> <!-- Hidden field for task ID -->
-
-
-              <button class="save" name="<%= task.tasks %>" style="display:none;" type="submit"  value="task.id">☑</button> <!-- Save button -->
-            </form>
-
-            <button type="button" class="edit-btn" >🖋</button> <!--Edit button-->
-                      
-          
-            <form action="/delete" method="post" class="delete-btn">
-              <button name="idDelete" value="<%= task.id %>" class="delete-btnori">
-                ❌
-              </button>
-            </form>
-</div>
-          
-          </div>
-
-          <% }) %> <% } else { %>
-          <li>No tasks yet</li>
-          <% } %>
-
-          <!-- //delete all button -->
-           <div class="deleteAll">
-
-           
-          <form action="/deleteall" method="post" >
-            <input type="text" name="taskId" value="id" style="display: none;">
-                      <input class="deleteall" name="taskId" value="🔌" type="submit"/>
-                      </form>
-
-          </div>
-        </div>
-        <br />
-        <hr />
-        <br />
-        <!-- Finished Tasks Or Archived-->
-        <p class="color-ul-finished">
-          <% if (dataf && dataf.length > 0) { %> <% dataf.forEach(task => { %> <!-- Loop through finished tasks -->
-            <!-- Write finished task and post-->
-             <div class="finished">
-          <div class="task-item ">
-            <form action="/unfinished" method="post" class="finished-btn">
-              <button name="idUnfinished" value="<%= task.id %>">🌌</button>
-            </form>
-
-            <span class="done"> <%= task.tasks %></span>
-            <form action="/delete" method="post" class="delete-btn">
-              <button name="idDelete" value="<%= task.id %>" class="delete-btn">
-                ❌
-              </button>
-            </form>
-          </div>
-          </div>
-          <% }) %> <% } else { %>
-          <p>Nothing in Galaxy</p>
-          <% } %>
-        </p>
-
-
     </div>
 
+    <br />
 
-    <script>
-      let text = document.getElementById("text");
-      let button = document.querySelector("button");
-      let p = document.createElement("p");
-      let editbtn = document.querySelectorAll(".edit-btn");
-      let savebtn = document.getElementsByClassName("save");
+    <!-- Active Tasks -->
+    <div class="card">
 
-      let editbtns = document.getElementsByClassName("edit-input");
-      let taskspan = document.getElementsByClassName("taskspan");
-      let editlast = document.getElementsByClassName("editlast");
+      <% if (data && data.length> 0) { %> <% data.forEach(task => { %>
+      <!-- Loop through tasks -->
 
-//Submit if empty is not allowed
-button.addEventListener("click", (e) => {
-  if (text.value.trim() === "") {
-    e.preventDefault(); // Prevent form submission
-    alert("Input cannot be empty");
-  }
-});
+      <!-- Write task and post-->
+      <div class="task-item" name="newtask">
+        <form action="/finished" method="post" class="finished-btn">
 
-// Edit button functionality
-editbtn.forEach((btn, index) => {
-  btn.addEventListener("click", (es) => {
-    es.preventDefault();
-    // Show the corresponding input + save button
-    editbtns[index].style.display = "inline-block";
-    savebtn[index].style.display = "inline-block";
+          <!--To another page button-->
+          <button name="idFinished" value="<%= task.id %>">✔</button>
+        </form>
 
-    taskspan[index].style.display = "none";
+        <!-- Task display and link to another page -->
+        <span class="taskTodo" data-id="<%= task.id %>">
+          <input type="submit" value="<%= task.tasks %>" class="taskspan" style="all:unset;" />
+        </span>
 
 
-    // Hide the edit button
-    btn.style.display = "none";
-  });
-});
-
-// Save button functionality 
-
-// Convert HTMLCollection to Array for easier iteration
-let saveButtons = Array.from(savebtn);
-saveButtons.forEach((e, index) => {
-  // For each save button
-  e.addEventListener("click", (es) => {
-    //prevent default form submission
-    es.preventDefault();
-    // Check if the corresponding input is empty
-    if (editbtns[index].value.trim() === "") {
-      alert("Input cannot be empty");
-      return
-
-}else {
-      // Submit the form if input is not empty
-      e.closest("form").submit();
-    }
-  });
+        <!-- Edit form -->
+        <div class="cont">
 
 
-});
- 
-// Let all buttons of edit to be array 
-editButtons = Array.from(editbtn);
-//let only one button be active at a time
-editButtons.forEach((e, index) => {
-  e.addEventListener("click", (es) => {
-    es.preventDefault();
+          <form action="/edit" method="post" class="edit-form">
+            <input type="text" autofocus style="display:none;" name="editlast" class="edit-input" value="<%= task.tasks.trim() %>" /> <!-- Edited input field -->
+            <input type="hidden" name="editIds" value="<%= task.id %>"> <!-- Hidden field for task ID -->
 
 
-    editButtons.forEach((btn, btnIndex) => {
-      if (btnIndex !== index) {
-        editButtons[btnIndex].disabled = true; // Disable other edit buttons
-      }else{
-        editButtons[btnIndex].disabled = false; // Enable the clicked edit button
-        
+            <button class="save" name="<%= task.tasks %>" style="display:none;" type="submit" value="task.id">☑</button> <!-- Save button -->
+          </form>
+
+          <button type="button" class="edit-btn">🖋</button>
+          <!--Edit button-->
+
+
+          <form action="/delete" method="post" class="delete-btn">
+            <button name="idDelete" value="<%= task.id %>" class="delete-btnori">
+              ❌
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <% }) %> <% } else { %>
+      <li>No tasks yet</li>
+      <% } %>
+
+      <!-- //delete all button -->
+      <div class="deleteAll">
+
+
+        <form action="/deleteall" method="post">
+          <input type="text" name="taskId" value="id" style="display: none;">
+          <input class="deleteall" name="taskId" value="🔌" type="submit" />
+        </form>
+
+      </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <!-- Finished Tasks Or Archived-->
+    <p class="color-ul-finished">
+      <% if (dataf && dataf.length > 0) { %> <% dataf.forEach(task => { %>
+      <!-- Loop through finished tasks -->
+      <!-- Write finished task and post-->
+    <div class="finished">
+      <div class="task-item ">
+        <form action="/unfinished" method="post" class="finished-btn">
+          <button name="idUnfinished" value="<%= task.id %>">🌌</button>
+        </form>
+
+        <span class="done"> <%= task.tasks %></span>
+        <form action="/delete" method="post" class="delete-btn">
+          <button name="idDelete" value="<%= task.id %>" class="delete-btn">
+            ❌
+          </button>
+        </form>
+      </div>
+    </div>
+    <% }) %> <% } else { %>
+    <p>Nothing in Galaxy</p>
+    <% } %>
+    </p>
+
+
+  </div>
+
+
+
+  <script>
+    let text = document.getElementById("text");
+    let button = document.querySelector("button");
+    let p = document.createElement("p");
+    let editbtn = document.querySelectorAll(".edit-btn");
+    let savebtn = document.getElementsByClassName("save");
+
+    let editbtns = document.getElementsByClassName("edit-input");
+    let taskspan = document.getElementsByClassName("taskspan");
+    let editlast = document.getElementsByClassName("editlast");
+
+    let subForm = document.querySelector(".subForm");
+
+
+    //Submit if empty is not allowed
+    button.addEventListener("click", (e) => {
+      if (text.value.trim() === "") {
+        e.preventDefault(); // Prevent form submission
+        alert("Input cannot be empty");
       }
     });
-  });
-});
 
-let textTodo = document.getElementsByClassName("taskTodo");
-let todos = Array.from(textTodo);
-todos.forEach((e, index) => {
-  e.addEventListener("click", () => {
+    // Edit button functionality
+    editbtn.forEach((btn, index) => {
+      btn.addEventListener("click", (es) => {
+        es.preventDefault();
+        // Show the corresponding input + save button
+        editbtns[index].style.display = "inline-block";
+        savebtn[index].style.display = "inline-block";
 
-    
-    e.style.cursor = "pointer";
-    let window = document.createElement("div");
-    document.body.appendChild(window);
+        taskspan[index].style.display = "none";
 
-    window.style.position = "fixed";
-    window.style.top = "50%";
-    window.style.left = "50%";
-    window.style.transform = "translate(-50%, -50%)";
-    window.style.backgroundColor = "white";
-    window.style.padding = "20px";
-    window.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-    window.style.zIndex = "1000";
-    window.style.width = "75%";
-    window.style.height = "75%";
-    window.style.overflowY = "auto";
 
-    let title = document.createElement("h2");
-    title.innerText = "Task Details";
-    window.appendChild(title);
-
-    let theExit = document.createElement("button");
-    window.appendChild(theExit);
-    theExit.innerText = "❌";
-    theExit.addEventListener("click", () => {
-      document.body.removeChild(window);
-    });
-
-    theExit.style.position = "absolute";
-    theExit.style.top = "10px";
-    theExit.style.right = "10px";
-    theExit.style.background = "none";
-    theExit.style.border = "none";
-    theExit.style.fontSize = "1.5rem";
-
-    let content = document.createElement("p");
-    let taskContent = e.querySelector(".taskspan").value;
-    content.innerText = taskContent;
-    window.appendChild(content);
-
-    let AddSubtask = document.createElement("button");
-    AddSubtask.innerText = "Add Subtask";
-    window.appendChild(AddSubtask);
-
-    AddSubtask.addEventListener("click", () => {
-      let subtaskInput = document.createElement("input");
-      subtaskInput.type = "text";
-      subtaskInput.placeholder = "Enter subtask";
-      subtaskInput.name = "subtask";
-      window.appendChild(subtaskInput);
-
-      let saveSubtaskBtn = document.createElement("button");
-      saveSubtaskBtn.innerText = "Save Subtask";
-      window.appendChild(saveSubtaskBtn);
-
-      saveSubtaskBtn.addEventListener("click", () => {
-        let subtaskText = subtaskInput.value.trim();
-        if (subtaskText !== "") {
-          let subtaskItem = document.createElement("p");
-          subtaskItem.innerText = "• " + subtaskText;
-          window.appendChild(subtaskItem);
-          subtaskInput.value = "";
-        } else {
-          alert("Subtask cannot be empty");
-        }
-
-        // subtaskItem.addEventListener("click", e => {
-        //   e.style.textDecoration = "line-through";
-        //   e.style.cursor = "pointer";
-        })
+        // Hide the edit button
+        btn.style.display = "none";
       });
     });
 
 
+    // Let all buttons of edit to be array 
+    editButtons = Array.from(editbtn);
+    //let only one button be active at a time
+    editButtons.forEach((e, index) => {
+      e.addEventListener("click", (es) => {
+        es.preventDefault();
 
-  })
+
+        editButtons.forEach((btn, btnIndex) => {
+          if (btnIndex !== index) {
+            editButtons[btnIndex].disabled = true; // Disable other edit buttons
+          } else {
+            editButtons[btnIndex].disabled = false; // Enable the clicked edit button
+
+          }
+        });
+      });
+    });
+
+    let textTodo = document.getElementsByClassName("taskTodo");
+    let todos = Array.from(textTodo);
+    todos.forEach((e, index) => {
+      let taskId = e.dataset.id;
+
+      e.addEventListener("click", () => {
+
+
+        e.style.cursor = "pointer";
+        let window = document.createElement("div");
+        document.body.appendChild(window);
+
+
+        window.style.position = "fixed";
+        window.style.top = "50%";
+        window.style.left = "50%";
+        window.style.transform = "translate(-50%, -50%)";
+        window.style.backgroundColor = "white";
+        window.style.padding = "20px";
+        window.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+        window.style.zIndex = "1000";
+        window.style.width = "75%";
+        window.style.height = "75%";
+        window.style.overflowY = "auto";
+
+        let title = document.createElement("h2");
+        title.innerText = "Task Details";
+        window.appendChild(title);
+
+        let theExit = document.createElement("button");
+        window.appendChild(theExit);
+        theExit.innerText = "❌";
 
 
 
-    </script>
-  </body>
+
+        theExit.style.position = "absolute";
+        theExit.style.top = "10px";
+        theExit.style.right = "10px";
+        theExit.style.background = "none";
+        theExit.style.border = "none";
+        theExit.style.fontSize = "1.5rem";
+
+        theExit.addEventListener("click", () => {
+          window.remove();
+        });
+
+        // Save button on click submit form
+        let saveButton = document.createElement("button");
+        saveButton.type = "submit";
+        saveButton.innerText = "Save ♾";
+        window.appendChild(saveButton);
+        saveButton.style.marginTop = "10px";
+
+        saveButton.addEventListener("click", () => {
+          subTaskForm.submit();
+        });
+
+        //Create a popup window to add sub task and descr
+        let subFormTitle = document.createElement("h3");
+        subFormTitle.innerText = "Add Subtask and Description";
+        window.appendChild(subFormTitle);
+
+        //if enter clicked in input field, a subtask is created
+        let subTaskForm = document.createElement("form");
+        window.appendChild(subTaskForm); 
+        subTaskForm.action = "/sub";
+        subTaskForm.method = "post";
+        subTaskForm.style.marginBottom = "20px";
+        subTaskForm.style.width = "100%";
+
+        //on-click of an icon a task is created 
+        let subTaskInput = document.createElement("input");
+        subTaskInput.type = "text";
+        subTaskInput.placeholder = "Subtask";
+        subTaskForm.appendChild(subTaskInput);
+        subTaskInput.name = "subtask";
+        subTaskInput.style.width = "60%";
+        subTaskInput.style.marginRight = "10px";
+        subTaskForm.style.textAlign = "center";
+
+        //Hidden input for parent task id
+        let hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+
+        let taskSpan = document.querySelector(".taskSpan")
+
+        let x = taskspan;
+        hiddenInput.name = "taskId";
+        hiddenInput.value = taskId;
+        subTaskForm.appendChild(hiddenInput);
+        subTaskForm.appendChild(subTaskInput);
+
+        //Add subtask button
+        let subTaskButton = document.createElement("button");
+        subTaskButton.type = "submit";
+        subTaskButton.innerText = "Add Subtask";
+        subTaskForm.appendChild(subTaskButton);
+        subTaskForm.style.display = "inline-block";
+        
+
+        //prevent page refresh on add subtask
+        subTaskForm.addEventListener("submit", (ev) => {
+          ev.preventDefault();});
+        
+
+        //Add task on Add Subtask button click
+        subTaskButton.addEventListener("click", () => {
+          let subp = document.createElement("p");
+          subp.innerText = "◼" + subTaskInput.value;
+          window.appendChild(subp);
+
+          //remove text after submit
+          subTaskInput.value = "";
+
+        });
+
+        //Description area
+        let descTitle = document.createElement("h3");
+        descTitle.innerText = "Description";
+        subTaskForm.appendChild(descTitle);
+
+        let descArea = document.createElement("textarea");
+        descArea.name = "description";
+        descArea.classList.add("description-area");
+        descArea.placeholder = "Enter description here...";
+
+        //append to form for submition
+        subTaskForm.appendChild(descArea);
+
+
+        //Description area aesth
+        descArea.rows = "5";
+        descArea.cols = "70";
+        descArea.style.borderStyle = "none"
+
+
+
+
+
+
+      });
+    });
+  </script>
+</body>
+
 </html>
